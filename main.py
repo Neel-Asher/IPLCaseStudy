@@ -1,5 +1,5 @@
 from src.load_data import load_deliveries, load_matches
-import numpy as np
+from src.t1_total_runs import total_runs_per_match
 
 deliveries = load_deliveries("data/deliveries.csv")
 matches = load_matches("data/matches.csv")
@@ -11,11 +11,7 @@ batter = deliveries[:, 6]
 bowler = deliveries[:, 7]
 batsman_runs = deliveries[:, 9].astype(int)
 
-batsman_runs = batsman_runs.astype(int)
+unique_matches, total_runs = total_runs_per_match(match_ids, batsman_runs)
 
-print("Deliveries shape:", deliveries.shape)
-print("Matches shape:", matches.shape)
-print("Unique batsman_runs:", np.unique(batsman_runs))
-print("Any empty strings in batter:", np.any(batter == ''))
-print("Any empty strings in bowler:", np.any(bowler == ''))
-print("Over range:", np.min(overs), "to", np.max(overs))
+for i in range(5):
+    print(unique_matches[i], total_runs[i])
