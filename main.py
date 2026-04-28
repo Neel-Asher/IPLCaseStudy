@@ -8,6 +8,7 @@ from src.t5_runs_per_over import runs_per_over
 from src.t6_win_percentage import win_percentage
 from src.t7_season_total_runs import season_total_runs
 from src.t8_highest_scoring_match import highest_scoring_match
+from src.t9_match_winner import match_winner
 import numpy as np
 
 deliveries = load_deliveries("data/deliveries.csv")
@@ -54,7 +55,6 @@ for i in range(len(deliveries)):
 
     season = match_season_map.get(match_id)
     
-    # Skip if match_id not found in matches file
     if season is None:
         continue
 
@@ -64,8 +64,14 @@ for i in range(len(deliveries)):
     season_runs_map[season] += runs
 
 sorted_seasons = sorted(season_runs_map.items())
-
 highest_match_id, highest_runs = highest_scoring_match(match_ids, total_runs_col)
+match_winners = match_winner(match_ids, batting_team, total_runs_col)
 
-print("\nHighest Scoring Match:")
-print(highest_match_id, highest_runs)
+print("\nMatch Winner Approximation:")
+
+count = 0
+for m, w in match_winners.items():
+    print(m, "->", w)
+    count += 1
+    if count == 5:
+        break
