@@ -9,6 +9,7 @@ from src.t6_win_percentage import win_percentage
 from src.t7_season_total_runs import season_total_runs
 from src.t8_highest_scoring_match import highest_scoring_match
 from src.t9_match_winner import match_winner
+from src.t10_toss_impact import toss_impact
 import numpy as np
 
 deliveries = load_deliveries("data/deliveries.csv")
@@ -66,12 +67,8 @@ for i in range(len(deliveries)):
 sorted_seasons = sorted(season_runs_map.items())
 highest_match_id, highest_runs = highest_scoring_match(match_ids, total_runs_col)
 match_winners = match_winner(match_ids, batting_team, total_runs_col)
+toss_wins, total = toss_impact(matches, match_ids, batting_team, total_runs_col)
 
-print("\nMatch Winner Approximation:")
-
-count = 0
-for m, w in match_winners.items():
-    print(m, "->", w)
-    count += 1
-    if count == 5:
-        break
+print("\nToss Impact Analysis:")
+print(f"Toss winner scored more in {toss_wins} out of {total} matches")
+print(f"Percentage: {round((toss_wins/total)*100, 2)}%")

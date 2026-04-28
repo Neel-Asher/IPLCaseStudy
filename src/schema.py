@@ -20,5 +20,6 @@ MATCH_COLS = {
     "date": 3,
     "team1": 7,
     "team2": 8,
-    "winner": 10
+    "toss_winner": 9,
+    "winner": 11
 }
