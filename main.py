@@ -5,6 +5,7 @@ from src.t3_strike_rate import strike_rate
 from src.t4_economy import economy_rate
 from src.t5_runs_per_over import runs_per_over
 from src.t6_win_percentage import win_percentage
+from src.t7_season_total_runs import season_total_runs
 import numpy as np
 
 deliveries = load_deliveries("data/deliveries.csv")
@@ -35,10 +36,14 @@ batters_sr, sr = strike_rate(batter, batsman_runs, deliveries)
 bowlers, eco = economy_rate(bowler, deliveries)
 avg_runs = runs_per_over(overs, total_runs_col)
 team_win_pct = win_percentage(matches)
-
-print("\nTop 5 Teams by Win Percentage:")
-
 sorted_teams = sorted(team_win_pct.items(), key=lambda x: x[1], reverse=True)
 
-for team, pct in sorted_teams[:5]:
-    print(team, round(pct, 2))
+seasons = matches[:, 1]
+season_runs = season_total_runs(matches, deliveries)
+
+print("\nSeason-wise Total Runs:")
+
+sorted_seasons = sorted(season_runs.items())
+
+for season, runs in sorted_seasons:
+    print(f"{season}: {runs}")
